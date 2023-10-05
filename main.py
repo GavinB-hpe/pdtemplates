@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 import argparse
+import csv
+import numpy as np
+import pandas as pd
+
+import plotly.express as px
 from logparser.Drain import LogParser
+
 
 INPUTFILE  = "fortemplating.txt"
 INDIR      = "."
@@ -26,6 +32,19 @@ def main():
     st = float(args.similarity)
     parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
     parser.parse(args.filename)
+    # parser dumps data as a CSV file, which is irritatnig as it needs to be read back in
+    csvname = args.filename + "_templates.csv"
+    results = []
+    count = 0
+    print(f"Resulting CSV file is {csvname}")
+    df = pd.read_csv(csvname)
+    df = df.sort_values(by=['Occurrences'], ascending=False)
+    print(df.head(16))
+    
+        
+        
+    
+            
 
 main()
 
