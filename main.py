@@ -27,6 +27,7 @@ def main():
     argp.add_argument("-f", "--filename", default=INPUTFILE, help="Name of input text file with a summary per line")    
     argp.add_argument("-d", "--depth", default=DEPTH, help=f"Depth param for tree algorithm. Default {DEPTH}")    
     argp.add_argument("-s", "--similarity", default=SIMILARITY, help=f"Similarity param for tree algorithm. Default {SIMILARITY}")    
+    argp.add_argument("-p", "--plot", action='store_true', help="Show graph of results")
     args = argp.parse_args()
     depth = int(args.depth)
     st = float(args.similarity)
@@ -37,11 +38,13 @@ def main():
     results = []
     count = 0
     print(f"Resulting CSV file is {csvname}")
+    pd.set_option('display.max_colwidth', 100)
     df = pd.read_csv(csvname)
     df = df.sort_values(by=['Occurrences'], ascending=False)
     print(df.head(16))
-    fig = px.bar(df, x="EventId", y="Occurrences", title="Event Types") 
-    fig.show()
+    if args.plot:
+        fig = px.bar(df, x="EventId", y="Occurrences", title="Event Types") 
+        fig.show()
         
         
     
