@@ -40,7 +40,8 @@ def main():
     df = pd.read_csv(csvname)
     df = df.sort_values(by=['Occurrences'], ascending=False)
     print(df.head(16))
-    
+    fig = px.bar(df, x="EventId", y="Occurrences", title="Event Types") 
+    fig.show()
         
         
     
