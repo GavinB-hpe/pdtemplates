@@ -26,12 +26,12 @@ regex = [r'\[#[0-9]+\]',
 def main():
     argp = argparse.ArgumentParser(prog='pdtemplates',
                                    description="Analyses event summaries and produces stats on log types")
-    argp.add_argument("-f", "--filename", default=INPUTFILE, help="Name of input text file with a summary per line")    
-    argp.add_argument("-d", "--depth", default=DEPTH, type=int, help=f"Depth param for tree algorithm. Default {DEPTH}")    
-    argp.add_argument("-s", "--similarity", default=SIMILARITY, type=float, help=f"Similarity param for tree algorithm. Default {SIMILARITY}")    
-    argp.add_argument("-w", "--width", default=COLWIDTH, type=int, help=f"Max column width. Default {COLWIDTH}")    
-    argp.add_argument("-l", "--length", default=LENGTH, type=int, help=f"Number of rows to show. 0 implies all rows. Default {LENGTH}")    
-    argp.add_argument("-p", "--plot", action='store_true', help="Show graph of results")
+    argp.add_argument("-f", "--filename", default=INPUTFILE, help=f"Name of input text file with a summary per line. Default {INPUTFILE}")
+    argp.add_argument("-d", "--depth", default=DEPTH, type=int, help=f"Depth param for tree algorithm. Default {DEPTH}")
+    argp.add_argument("-s", "--similarity", default=SIMILARITY, type=float, help=f"Similarity param for tree algorithm. Default {SIMILARITY}")
+    argp.add_argument("-w", "--width", default=COLWIDTH, type=int, help=f"Max column width. Default {COLWIDTH}")
+    argp.add_argument("-l", "--length", default=LENGTH, type=int, help=f"Number of rows to show. 0 implies all rows. Default {LENGTH}")
+    argp.add_argument("-p", "--plot", action='store_true', help="Show graph of results.")
 
     args = argp.parse_args()
     depth = int(args.depth)
@@ -54,10 +54,7 @@ def main():
     if args.plot:
         fig = px.bar(df, x="EventId", y="Occurrences", title="Event Types") 
         fig.show()
-        
-        
-    
-            
+
 
 main()
 
