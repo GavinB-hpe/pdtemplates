@@ -36,13 +36,14 @@ def main():
     args = argp.parse_args()
     depth = int(args.depth)
     st = float(args.similarity)
+    print(f"Running with depth {depth}, similarity {st}, and regex {regex}")
     parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
     parser.parse(args.filename)
     # parser dumps data as a CSV file, which is irritatnig as it needs to be read back in
     csvname = args.filename + "_templates.csv"
     results = []
     count = 0
-    print(f"Resulting CSV file is {csvname}")
+    print(f"Resulting CSV file is {csvname}\n")
     pd.set_option('display.max_colwidth', args.width)
     df = pd.read_csv(csvname)
     df = df.sort_values(by=['Occurrences'], ascending=False)
