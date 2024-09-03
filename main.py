@@ -9,8 +9,8 @@ from logparser.Drain import LogParser
 
 
 INPUTFILE  = "fortemplating.txt"
-INDIR      = "."
-OUTDIR     = "."
+INDIR      = "./"
+OUTDIR     = "./"
 SIMILARITY = 0.5
 DEPTH      = 4
 COLWIDTH   = 100
