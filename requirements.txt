@@ -1,2 +1,12 @@
 logparser3
+Pillow
 plotly
+pandas
+regex
+numpy
+scipy
+keras_preprocessing
+torchvision
+torch
+scikit_learn
+tqdm

@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 
 import plotly.express as px
-from logparser.Drain import LogParser
 
 
 INPUTFILE  = "fortemplating.txt"
@@ -32,14 +31,28 @@ def main():
     argp.add_argument("-w", "--width", default=COLWIDTH, type=int, help=f"Max column width. Default {COLWIDTH}")
     argp.add_argument("-l", "--length", default=LENGTH, type=int, help=f"Number of rows to show. 0 implies all rows. Default {LENGTH}")
     argp.add_argument("-p", "--plot", action='store_true', help="Show graph of results.")
-
+    argp.add_argument("-A", "--alt", action='store_true', help="Use alternative algorithm.")
     args = argp.parse_args()
-    depth = int(args.depth)
-    st = float(args.similarity)
-    print(f"Running with depth {depth}, similarity {st}, and regex {regex}")
-    parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
-    parser.parse(args.filename)
-    # parser dumps data as a CSV file, which is irritatnig as it needs to be read back in
+
+    parser = None
+    if args.alt:
+        from logparser.NuLog import LogParser
+        filters = "(\s+blk_)|(:)|(\s)"
+        k = 15
+        nr_epochs = 5 # Number of epochs to run
+        num_samples = 0
+        print(f"Processing {args.filename} using alternative NuLog parser\n")
+        print(f"Running with filters {filters}, k {k}, epochs {nr_epochs} and num_samples {num_samples}\n")
+        parser = LogParser(log_format=log_format, indir=INDIR, outdir=OUTDIR, filters=filters, k=k)
+        parser.parse(args.filename, nr_epochs=nr_epochs, num_samples=num_samples)
+    else:
+        from logparser.Drain import LogParser
+        depth = int(args.depth)
+        st = float(args.similarity)
+        print(f"Running with depth {depth}, similarity {st}, and regex {regex}")
+        parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
+        parser.parse(args.filename)
+    # parser dumps data as a CSV file, which is irritating as it needs to be read back in
     csvname = args.filename + "_templates.csv"
     results = []
     count = 0
