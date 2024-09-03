@@ -45,6 +45,7 @@ def main():
         print(f"Running with filters {filters}, k {k}, epochs {nr_epochs} and num_samples {num_samples}\n")
         parser = LogParser(log_format=log_format, indir=INDIR, outdir=OUTDIR, filters=filters, k=k)
         parser.parse(args.filename, nr_epochs=nr_epochs, num_samples=num_samples)
+        log.Fatalf("NuLog parser not yet fully implemented - need template file created")
     else:
         from logparser.Drain import LogParser
         depth = int(args.depth)
@@ -53,7 +54,7 @@ def main():
         parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
         parser.parse(args.filename)
     # parser dumps data as a CSV file, which is irritating as it needs to be read back in
-    csvname = args.filename + "_templates.csv"
+    csvname = args.filename + "templates_.csv"
     results = []
     count = 0
     print(f"Resulting CSV file is {csvname}\n")
