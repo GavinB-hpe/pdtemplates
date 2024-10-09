@@ -54,7 +54,7 @@ def main():
         parser = LogParser(log_format, indir=INDIR, outdir=OUTDIR, depth=depth, st=st, rex=regex)
         parser.parse(args.filename)
     # parser dumps data as a CSV file, which is irritating as it needs to be read back in
-    csvname = args.filename + "templates_.csv"
+    csvname = args.filename + "_templates.csv"
     results = []
     count = 0
     print(f"Resulting CSV file is {csvname}\n")
